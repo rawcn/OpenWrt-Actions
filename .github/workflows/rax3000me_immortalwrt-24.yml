@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: immortalwrt-24
+name: rax3000me_immortalwrt-24
 
 on:
   # push:
@@ -77,7 +77,7 @@ jobs:
     - name: 加载自定义配置
       env:
         CONFIG_FILES: ${{ github.workflow }}/files
-        CONFIG_FILE: ${{ github.workflow }}/.config
+        CONFIG_FILE: ${{ github.workflow }}/custom.config
         DIY_P2_SH: ${{ github.workflow }}/diy2.sh
       run: |
         [ -e $CONFIG_FILES ] && mv $CONFIG_FILES $openwrt_root/files
