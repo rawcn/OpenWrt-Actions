@@ -17,3 +17,17 @@ git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/l
 sed -i "s/192.168.1.1/192.168.5.1/g" package/base-files/files/bin/config_generate
 sed -i "s/hostname='ImmortalWrt'/hostname='RAX3000Me'/g" package/base-files/files/bin/config_generate
 sed -i "s/DISTRIB_DESCRIPTION=.*/DISTRIB_DESCRIPTION='wangdada $(date +"%y%m%d") 24.10'/g" package/base-files/files/etc/openwrt_release
+# --- 网络栈优化脚本 (添加到 diy2.sh 末尾) ---
+cat <<EOF >> package/base-files/files/etc/sysctl.conf
+# 提高全连接队列长度，防丢包
+net.core.somaxconn = 65535
+# 开启 BBR (配合 TurboACC)
+net.core.default_qdisc = fq
+net.ipv4.tcp_congestion_control = bbr
+# 缩短 TCP Keepalive 时间，快速释放死连接
+net.ipv4.tcp_keepalive_time = 600
+net.ipv4.tcp_keepalive_intvl = 30
+net.ipv4.tcp_keepalive_probes = 5
+# 扩大文件描述符限制 (对 BT/P2P 有用)
+fs.file-max = 1000000
+EOF
