@@ -12,5 +12,4 @@
 
 # Uncomment a feed source
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
-# 自定义软件源
-git clone --depth 1 -b main https://github.com/QiYueYiya/openwrt-packages package/openwrt-packages
+# 自定义软件
